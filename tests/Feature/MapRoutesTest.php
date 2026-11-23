@@ -70,4 +70,26 @@ final class MapRoutesTest extends TestCase
             ->assertRedirect('/maps')
             ->assertSessionHasErrors('seed');
     }
+
+        public function test_index_page_has_seed_form(): void
+    {
+        $this->get('/maps')
+            ->assertOk()
+            ->assertSee('name="seed"', false);
+    }
+
+    public function test_web_page_shows_map_for_valid_seed(): void
+    {
+        $this->get('/maps/42')
+            ->assertOk()
+            ->assertSee('Карта, сид 42');
+    }
+
+    public function test_web_page_redirects_back_for_invalid_seed(): void
+    {
+        $this->from('/maps')
+            ->get('/maps/abc')
+            ->assertRedirect('/maps')
+            ->assertSessionHasErrors('seed');
+    }
 }
