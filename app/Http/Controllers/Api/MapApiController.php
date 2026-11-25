@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MapParamsRequest;
 use App\Services\MapGen\MapGenerator;
 use App\Services\MapGen\TileType;
+use App\Services\MapStats\MapStatsRecorder;
 use Illuminate\Http\JsonResponse;
 
 class MapApiController extends Controller
 {
-    public function show(MapParamsRequest $request): JsonResponse
+    public function show(MapParamsRequest $request, MapStatsRecorder $stats): JsonResponse
     {
         $map = $request->validatedMap();
+
+        // Статистика пишется до генерации. Если позже добавят кэш, ставьте его после этой строки.
+        $stats->record($map['seed'], $map['x'], $map['y'], $map['width'], $map['height']);
 
         $grid = (new MapGenerator($map['seed']))->grid(
             $map['x'],

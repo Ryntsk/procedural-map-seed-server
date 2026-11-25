@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 final class MapRoutesTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_api_returns_map_for_valid_seed(): void
     {
         $response = $this->getJson('/api/maps/42');
@@ -71,7 +74,7 @@ final class MapRoutesTest extends TestCase
             ->assertSessionHasErrors('seed');
     }
 
-        public function test_index_page_has_seed_form(): void
+    public function test_index_page_has_seed_form(): void
     {
         $this->get('/maps')
             ->assertOk()
@@ -91,5 +94,30 @@ final class MapRoutesTest extends TestCase
             ->get('/maps/abc')
             ->assertRedirect('/maps')
             ->assertSessionHasErrors('seed');
+    }
+
+    public function test_web_and_api_requests_are_counted_in_one_row(): void
+    {
+        $this->get('/maps/42');
+        $this->getJson('/api/maps/42');
+
+        $this->assertDatabaseCount('map_requests', 1);
+        $this->assertDatabaseHas('map_requests', [
+            'seed' => 42,
+            'origin_x' => 0,
+            'origin_y' => 0,
+            'width' => 40,
+            'height' => 20,
+            'hits' => 2,
+        ]);
+    }
+
+    public function test_invalid_requests_and_search_redirect_are_not_counted(): void
+    {
+        $this->getJson('/api/maps/abc');
+        $this->from('/maps')->get('/maps/abc');
+        $this->get('/maps/search?seed=42');
+
+        $this->assertDatabaseCount('map_requests', 0);
     }
 }
