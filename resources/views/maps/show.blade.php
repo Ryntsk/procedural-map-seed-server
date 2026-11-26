@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8">
-    <title>Карта {{ $map['seed'] }}</title>
+@extends('layouts.app')
+
+@section('title', 'Карта ' . $map['seed'])
+
+@section('head')
     <style>
         .row { display: flex; }
         .tile { width: 16px; height: 16px; }
@@ -11,8 +11,9 @@
         .forest { background: #2e7d32; }
         .mountain { background: #8d8d8d; }
     </style>
-</head>
-<body>
+@endsection
+
+@section('content')
     <h1>Карта, сид {{ $map['seed'] }}</h1>
     <p>Координаты: ({{ $map['x'] }}, {{ $map['y'] }}), размер {{ $map['width'] }}×{{ $map['height'] }}</p>
 
@@ -36,5 +37,4 @@
         ]) }}">Сдвинуть вправо</a>
     </p>
     <p><a href="{{ route('maps.index') }}">Другой сид</a></p>
-</body>
-</html>
+@endsection

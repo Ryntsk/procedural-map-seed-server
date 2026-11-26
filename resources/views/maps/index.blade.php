@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8">
-    <title>Генератор карт</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Генератор карт')
+
+@section('content')
     <h1>Генератор карт по сиду</h1>
 
     <form method="GET" action="{{ route('maps.search') }}">
@@ -15,5 +13,4 @@
     @error('seed')
         <p style="color: red">{{ $message }}</p>
     @enderror
-</body>
-</html>
+@endsection
