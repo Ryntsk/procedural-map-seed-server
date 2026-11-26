@@ -4,18 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Генератор карт')</title>
-    @yield('head')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{{ route('maps.index') }}">Генератор карт</a>
+    <header class="site-header">
+        <nav class="site-nav">
+            <span class="brand">Генератор карт</span>
+            <a href="{{ route('maps.index') }}">Главная</a>
             <a href="{{ route('maps.show', ['seed' => 42]) }}">Пример: сид 42</a>
             <a href="{{ url('/api/maps/42') }}">API</a>
         </nav>
     </header>
 
-    <main>
+    <main class="container">
         @yield('content')
     </main>
 </body>
