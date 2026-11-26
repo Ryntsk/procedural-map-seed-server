@@ -6,15 +6,24 @@
     <h1>Карта, сид {{ $map['seed'] }}</h1>
     <p class="map-info">Координаты: ({{ $map['x'] }}, {{ $map['y'] }}), размер {{ $map['width'] }}×{{ $map['height'] }}</p>
 
-    <div class="map-wrap">
-        <div class="map-grid">
-            @foreach ($grid as $row)
-                <div class="map-row">
-                    @foreach ($row as $tile)
-                        <div class="tile {{ $tile->value }}"></div>
-                    @endforeach
-                </div>
-            @endforeach
+    <div class="map-panel">
+        <div class="map-wrap">
+            <div class="map-grid" style="--map-cols: {{ $map['width'] }}">
+                @foreach ($grid as $row)
+                    <div class="map-row">
+                        @foreach ($row as $tile)
+                            <div class="tile {{ $tile->value }}"></div>
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="legend">
+            <span class="legend-item"><span class="legend-swatch water"></span>Вода</span>
+            <span class="legend-item"><span class="legend-swatch plain"></span>Равнина</span>
+            <span class="legend-item"><span class="legend-swatch forest"></span>Лес</span>
+            <span class="legend-item"><span class="legend-swatch mountain"></span>Горы</span>
         </div>
     </div>
 
