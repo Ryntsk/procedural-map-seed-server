@@ -76,7 +76,7 @@ php artisan test
 Набор содержит 30 тестов: генератор и ГСЧ, маршруты, API, валидацию параметров и подсчёт статистики.
 
 ## Структура
-
+Подробное описание архитектуры, пути обработки запроса и таблицы статистики: [docs/architecture.md](docs/architecture.md).
 - `app/Services/MapGen` — генерация карты: `SeededRandom` (SplitMix64), `MapGenerator`, `TileType`
 - `app/Services/MapStats` — запись статистики запросов
 - `app/Http/Controllers/MapController.php` — страницы карты
